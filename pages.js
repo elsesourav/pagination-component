@@ -73,7 +73,7 @@ class Pages {
          page.addEventListener("click", () => {
             const { possible, maxPages, current, pages, nextIcon } = this;
 
-            if (page.classList.contains(nextIcon) && possible <= maxPages) {
+            if (page.classList.contains(nextIcon) && possible > maxPages) {
                const offset = maxPages - 1;
                const temp = i == 0 ? offset * -1 : offset;
 
