@@ -1,7 +1,7 @@
 const MAX_PAGE_RENDER = 400;
 const MAX_PAGE_BUTTON = 5;
 let currentPageIndex = 0;
-let maxPagePossible = 11;
+let maxPagePossible = 5;
 
 const pagesElement = document.getElementById("pages");
 

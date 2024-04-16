@@ -51,6 +51,7 @@ body {
    user-select: none;
    -moz-user-select: none;
    -ms-user-select: none;
+   transition: color 200ms ease-in-out, border 200ms ease-in-out, box-shadow 200ms ease-in-out;
 }
 #pages .page::after {
    content: "";

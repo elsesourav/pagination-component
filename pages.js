@@ -45,18 +45,27 @@ class Pages {
          page.innerHTML = "";
       });
 
-      pages.forEach((page, i) => {
-         const ni = left ? start + i - 1 : start + i;
+      if (possible > maxPages) {
+         pages.forEach((page, i) => {
+            const newI = left ? start + i - 1 : start + i;
 
-         if (i == 0 && left) page.classList.add(nextIcon, "show");
-         else if (i == maxPages - 1 && right)
-            page.classList.add(nextIcon, "show");
-         else {
+            if (i == 0 && left) page.classList.add(nextIcon, "show");
+            else if (i == maxPages - 1 && right)
+               page.classList.add(nextIcon, "show");
+            else {
+               page.classList.add("show");
+               page.innerHTML = newI;
+            }
+            if (newI === current) page.classList.add("active");
+         });
+      } else {
+         for (let i = 0; i < possible; i++) {
+            const page = pages[i];
+            if (i == 0 ) page.classList.add("active");
             page.classList.add("show");
-            page.innerHTML = ni;
+            page.innerHTML = i + 1;
          }
-         if (ni === current) page.classList.add("active");
-      });
+      }
    }
 
    #pageEventListener() {
@@ -64,7 +73,7 @@ class Pages {
          page.addEventListener("click", () => {
             const { possible, maxPages, current, pages, nextIcon } = this;
 
-            if (page.classList.contains(nextIcon)) {
+            if (page.classList.contains(nextIcon) && possible <= maxPages) {
                const offset = maxPages - 1;
                const temp = i == 0 ? offset * -1 : offset;
 
@@ -75,10 +84,9 @@ class Pages {
                      this.current = page1Value;
                      this.#updatePages(true, true, page1Value - (maxPages - 3));
                   } else {
-                     this.current = Math.max(page1Value, 0);
+                     this.current = page1Value;
                      this.#updatePages(false, true, 1);
                   }
-
                } else {
                   const pageN1Value =
                      parseInt(pages[maxPages - 2].innerText) + 1;
@@ -87,7 +95,7 @@ class Pages {
                      this.current = pageN1Value;
                      this.#updatePages(true, true, pageN1Value);
                   } else {
-                     this.current = Math.min(current + temp - 1, possible);
+                     this.current = pageN1Value;
                      this.#updatePages(true, false, possible - (maxPages - 2));
                   }
                }
